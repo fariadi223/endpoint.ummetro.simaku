@@ -1,0 +1,41 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "name": "Home",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "pages-home"
+    },
+    {
+      "url": "mahasiswa",
+      "icon": "menu-icon tf-icons ti ti-user",
+      "name": "Mahasiswa",
+      "slug": "pages-mahasiswa"
+    },
+    {
+      "url": "matakuliah",
+      "icon": "menu-icon tf-icons ti ti-file",
+      "name": "Kurikulum",
+      "slug": "pages-matakuliah"
+    },
+    {
+      "url": "page-2",
+      "icon": "menu-icon tf-icons ti ti-file",
+      "name": "K R S",
+      "slug": "pages-page-2"
+    },
+    {
+      "url": "page-2",
+      "icon": "menu-icon tf-icons ti ti-file",
+      "name": "Nilai Akademik",
+      "slug": "pages-page-2"
+    },
+    {
+      "url": "pages/misc-error",
+      "name": "Error",
+      "icon": "menu-icon tf-icons ti ti-alert-triangle",
+      "slug": "pages-misc-error",
+      "target": "_blank"
+    }
+  ]
+}
