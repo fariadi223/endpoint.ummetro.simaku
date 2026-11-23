@@ -12,6 +12,7 @@ use App\Http\Requests\PaginateRequest;
 use App\Http\Resources\PaginateCollection;
 
 use App\Models\UeuTblRek1Model;
+use App\Models\UeuTblRek6Model;
 
 use RequestFilterHelper;
 
@@ -38,6 +39,43 @@ class RekController extends Controller
                         })
                         ->where($whereValue)
                         ->orderBy('koderek1', 'asc')
+                        ->paginate($request->input('limit'));
+
+            $data = new PaginateCollection($paginate);
+            return response()->json($data, 200);
+
+        } catch (\Exception $e) {
+            return $this->responseError(null, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Rekening level 6 (yang belum dihapus) beserta induknya rek5 -> rek1,
+     * dipakai SITAMA sebagai mata anggaran biaya.
+     * Query: search, idrek6, idrek5, koderek6, page, limit.
+     */
+    public function indexRek6(
+        PaginateRequest $request,
+    ) {
+        try {
+            $filterField   = [
+                'idrek6' => 'idrek6',
+                'idrek5' => 'idrek5',
+                'koderek6' => 'koderek6'
+            ];
+            $search     = $request->input('search');
+            $whereValue = RequestFilterHelper::fieldKey($filterField , $request->all());
+
+            $paginate = UeuTblRek6Model::with('rek5.rek4.rek3.rek2.rek1')
+                        ->whereNull('deleted_at')
+                        ->when($search, function ($query) use ($search) {
+                            $query->where(function ($query) use ($search) {
+                                $query->where('namarek6', 'LIKE', "%{$search}%")
+                                      ->orWhere('koderek6', 'LIKE', "%{$search}%");
+                            });
+                        })
+                        ->where($whereValue)
+                        ->orderBy('koderek6', 'asc')
                         ->paginate($request->input('limit'));
 
             $data = new PaginateCollection($paginate);

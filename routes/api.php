@@ -34,7 +34,9 @@ Route::group([
     });
     
     Route::group(['prefix' => 'journal'], function() {
+        Route::get('spm', [JournalController::class, 'index'])->middleware('auth.jwt');
         Route::post('spm', [JournalController::class, 'store'])->middleware('auth.jwt');
+        Route::put('spm/unit', [JournalController::class, 'updateUnit'])->middleware('auth.jwt');
     });
     
     Route::group(['prefix' => 'kegiatan'], function() {
